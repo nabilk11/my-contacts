@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+
+/* ADDITIONAL STYLING */
+
+.page-header {
+  text-align: center;
+  background-color: cadetblue;
+  padding: 10vh;
+  padding: 10vw;
+  width: 100%;
+}
