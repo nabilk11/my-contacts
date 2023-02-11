@@ -1,6 +1,10 @@
 import express from "express";
 import morgan from "morgan";
 
+// AUTH IMPORTS
+import router from "./routes/auth.js";
+import auth from "./middleware/auth.js";
+
 // Mongoose DB Connection
 import { CONNECT_DB } from "./config/db.js";
 
@@ -16,13 +20,18 @@ app.get("/", (req, res) => {
   res.send("MY CONTACTS APP");
 });
 
+// User Auth Routes
+app.get("/private", auth, (req, res) => {
+  return res.status(200).json({ ...req.user._doc });
+});
+app.use("/api", router);
 
-// User Auth Route
-import router from "./routes/auth.js";
-app.use("/api", router)
+
+
+
+
 
 // server config
-
 const PORT = process.env.PORT || 8000;
 
 // listener
