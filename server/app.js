@@ -16,12 +16,21 @@ app.get("/", (req, res) => {
   res.send("MY CONTACTS APP");
 });
 
+
+// User Auth Route
+import router from "./routes/auth.js";
+app.use("/api", router)
+
 // server config
 
 const PORT = process.env.PORT || 8000;
 
 // listener
 app.listen(PORT, async () => {
-  await CONNECT_DB();
-  console.log(`My Contacts is Live on port : ${PORT}`);
+  try {
+    await CONNECT_DB();
+    console.log(`My Contacts is Live on port : ${PORT}`);
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
 });
