@@ -18,9 +18,14 @@ code {
 /* ADDITIONAL STYLING */
 
 .page-header {
+  margin-top: 1.5vh;
   text-align: center;
-  background-color: cadetblue;
-  padding: 10vh;
-  padding: 10vw;
+  background-color: white;
+  padding: 2vh;
   width: 100%;
+  
+}
+
+.page-title {
+  color: darkslategrey;
 }
