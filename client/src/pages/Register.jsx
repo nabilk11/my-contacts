@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 
@@ -19,69 +21,86 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     console.log(credentials);
+
+    // Toast Alerts
+    if (
+      !credentials.email ||
+      !credentials.password ||
+      !credentials.name ||
+      !credentials.confirmPassword
+    ) {
+      toast.error("All fields are required!");
+      return;
+    }
+
+    if (credentials.password !== credentials.confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
   };
 
   return (
-    <div>
+    <div className="container">
+      <ToastContainer autoClose={3000} />
       <Header title={"Create an Account"} />
       <div className="register-form">
         <form action="" onSubmit={handleRegister}>
           <div className="form-group">
-            <label for="email-input" className="form-label mt-4">
+            <label htmlFor="name" className="form-label mt-4">
               Name
             </label>
             <input
               type="name"
               className="form-control"
-              id="name-field"
+              id="name"
               placeholder="Your Name"
               value={credentials.name}
               name="name"
               onChange={handleChange}
-              required
+              //   required
             />
             <small id="form-sub-text" className="form-text text-muted">
               Name can be a maximum of 30 characters!
             </small>
           </div>
           <div className="form-group">
-            <label for="email-input" className="form-label mt-4">
+            <label htmlFor="email-input" className="form-label mt-4">
               Email Address
             </label>
             <input
               type="email"
               className="form-control"
-              id="email-field"
+              id="email"
               placeholder="email@example.com"
               value={credentials.email}
               name="email"
               onChange={handleChange}
-              required
+              //   required
             />
             <small id="form-sub-text" className="form-text text-muted">
               We will never share your email with anybody!
             </small>
           </div>
           <div className="form-group">
-            <label for="password-input" className="form-label mt-4">
+            <label htmlFor="password-input" className="form-label mt-4">
               Password
             </label>
             <input
               type="password"
               className="form-control"
-              id="password-input"
+              id="password"
               placeholder="*********"
               value={credentials.password}
               name="password"
               onChange={handleChange}
-              required
+              //   required
             />
             <small id="form-sub-text" className="form-text text-muted">
               Password must be at least 6 characters!
             </small>
           </div>
           <div className="form-group">
-            <label for="password-input" className="form-label mt-4">
+            <label htmlFor="password-input" className="form-label mt-4">
               Confirm Password
             </label>
             <input
@@ -92,13 +111,13 @@ const Register = () => {
               value={credentials.confirmPassword}
               name="confirmPassword"
               onChange={handleChange}
-              required
+              //   required
             />
             <small id="form-sub-text" className="form-text text-muted">
               Password must be at least 6 characters!
             </small>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg">
+          <button type="submit" className="btn btn-primary btn-lg">
             Register
           </button>
         </form>

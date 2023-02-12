@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Header from "../components/Header";
 
 const Login = () => {
@@ -16,11 +18,18 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(credentials)
+    console.log(credentials);
+
+    // Toast Alerts
+    if (!credentials.email || !credentials.password) {
+      toast.error("All fields are required!");
+      return;
+    }
   };
 
   return (
-    <div>
+    <div className="container">
+      <ToastContainer autoClose={3000} />
       <Header title={"Login to Your Account"} />
       <div className="login-form">
         <form action="" onSubmit={handleLogin}>
@@ -36,7 +45,7 @@ const Login = () => {
               value={credentials.email}
               name="email"
               onChange={handleChange}
-              required
+            //   required
             />
             <small id="form-sub-text" className="form-text text-muted">
               We will never share your email with anybody!
@@ -54,7 +63,7 @@ const Login = () => {
               value={credentials.password}
               name="password"
               onChange={handleChange}
-              required
+            //   required
             />
             <small id="form-sub-text" className="form-text text-muted">
               Password must be at least 6 characters!
