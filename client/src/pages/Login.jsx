@@ -16,8 +16,6 @@ const Login = () => {
     password: "",
   });
 
-  
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
@@ -31,20 +29,16 @@ const Login = () => {
       toast.error("All fields are required!");
       return;
     }
-    loginCall(credentials)
+    loginCall(credentials);
   };
 
-
   useEffect(() => {
-      if (error) {
-
-          toast.error(error)
-          console.log(error)
-          setError(null)
-        }
-      
-
-  },[error])
+    if (error) {
+      toast.error(error);
+      console.log(error);
+      setError(null);
+    }
+  }, [error, setError]);
 
   return (
     <div className="container">

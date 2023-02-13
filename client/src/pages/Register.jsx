@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const Register = () => {
+  // Login Call Context
+  const { registerCall, error, setError } = useContext(AuthContext);
   // user registration credentials
   const [credentials, setCredentials] = useState({
     name: "",
@@ -20,7 +23,6 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log(credentials);
 
     // Toast Alerts
     if (
@@ -37,7 +39,16 @@ const Register = () => {
       toast.error("Passwords do not match!");
       return;
     }
+    registerCall(credentials);
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      console.log(error);
+      setError(null);
+    }
+  }, [error, setError]);
 
   return (
     <div className="container">

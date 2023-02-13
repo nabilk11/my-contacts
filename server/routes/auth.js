@@ -52,7 +52,7 @@ router.post("/register", async (req, res) => {
 
     return res.status(201).json({ ...result._doc });
   } catch (err) {
-    console.log(`Error: ${err}`);
+    
     return res.status(500).json({ error: err.message });
   }
 });
@@ -100,8 +100,8 @@ router.post("/login", async (req, res) => {
 
     return res.status(200).json({ token, user });
   } catch (err) {
-    console.log(`Error: ${err}`);
-    return res.status(500).json(err.message);
+    
+    return res.status(500).json({ error: err.message });
   }
 });
 
