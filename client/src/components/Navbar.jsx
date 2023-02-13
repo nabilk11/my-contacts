@@ -1,7 +1,18 @@
 // NAVBAR COMPONENT
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 const Navbar = () => {
+
+  const { user, setUser } = useContext(AuthContext)
+
+  // Logout Function
+  const logoutUser = () => {
+    setUser(null)
+    localStorage.removeItem("token")
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
@@ -45,12 +56,12 @@ const Navbar = () => {
                 <span className="visually-hidden">(current)</span>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link active" to={"/"}>
-                Log Out
+            {user ? <li className="nav-item">
+              <button className="btn btn-danger" onClick={logoutUser}>
+                Logout
                 <span className="visually-hidden">(current)</span>
-              </Link>
-            </li>
+              </button>
+            </li> : <></>}
           </ul>
         </div>
       </div>
