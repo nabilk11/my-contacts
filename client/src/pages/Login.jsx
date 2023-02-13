@@ -1,15 +1,22 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../components/Header";
+import AuthContext from "../context/AuthContext";
 
 const Login = () => {
+  // Login Call Context
+  const { loginCall, user, error, setError } = useContext(AuthContext);
   // user login credentials
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,14 +25,26 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(credentials);
 
     // Toast Alerts
     if (!credentials.email || !credentials.password) {
       toast.error("All fields are required!");
       return;
     }
+    loginCall(credentials)
   };
+
+
+  useEffect(() => {
+      if (error) {
+
+          toast.error(error)
+          console.log(error)
+          setError(null)
+        }
+      
+
+  },[error])
 
   return (
     <div className="container">
@@ -45,7 +64,7 @@ const Login = () => {
               value={credentials.email}
               name="email"
               onChange={handleChange}
-            //   required
+              //   required
             />
             <small id="form-sub-text" className="form-text text-muted">
               We will never share your email with anybody!
@@ -63,7 +82,7 @@ const Login = () => {
               value={credentials.password}
               name="password"
               onChange={handleChange}
-            //   required
+              //   required
             />
             <small id="form-sub-text" className="form-text text-muted">
               Password must be at least 6 characters!

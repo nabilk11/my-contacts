@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 
 // AUTH IMPORTS
 import router from "./routes/auth.js";
@@ -14,6 +15,8 @@ const app = express();
 // middleware
 app.use(express.json());
 app.use(morgan("tiny"));
+// CORS POLICY
+app.use(cors());
 
 // routes
 app.get("/", (req, res) => {
@@ -25,11 +28,6 @@ app.get("/private", auth, (req, res) => {
   return res.status(200).json({ ...req.user._doc });
 });
 app.use("/api", router);
-
-
-
-
-
 
 // server config
 const PORT = process.env.PORT || 8000;

@@ -9,8 +9,6 @@ import { User } from "../models/User.js";
 
 const router = Router();
 
-router.post("/login");
-
 // User Register Router
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
@@ -79,7 +77,7 @@ router.post("/login", async (req, res) => {
 
     // If no user exists
     if (!existingUser)
-      return res.status(400).json({ error: "Invalid Username or Password!" });
+      return res.status(400).json({ error: "You don't have an account!" });
 
     // If user exists - Decrypt password
 
@@ -98,10 +96,12 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
-    return res.status(200).json({ token });
+    const user = { ...existingUser._doc };
+
+    return res.status(200).json({ token, user });
   } catch (err) {
     console.log(`Error: ${err}`);
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json(err.message);
   }
 });
 
