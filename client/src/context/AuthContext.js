@@ -3,12 +3,36 @@ import { createContext } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+
+
+useEffect(() => {
+    isLoggedIn()
+}, [])
+
+// Get Logged In User Details
+const isLoggedIn = async () => {
+    try {
+        const res = await axios.get("http://localhost:8000/api/user", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+
+            }
+        })
+        console.log(res.data)
+        setUser(res.data);
+        
+    } catch (err) {
+        
+    }
+}
 
   // Login Call
   const loginCall = async (credentials) => {
@@ -21,7 +45,7 @@ export const AuthContextProvider = ({ children }) => {
         password: credentials.password,
       });
       console.log(res.data);
-      setUser(res.data.user);
+      
       localStorage.setItem("token", res.data.token);
     } catch (err) {
       setError(err.response.data.error);
